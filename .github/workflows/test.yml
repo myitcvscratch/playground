@@ -1,0 +1,15 @@
+on: [push, pull_request]
+name: Test
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: [1.13.x, 1.14.x]
+        platform: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.platform }}
+    steps:
+    - name: Docker version
+      run: docker version
+    - name: Docker build
+      run: DOCKER_BUILDKIT=1 docker build .
